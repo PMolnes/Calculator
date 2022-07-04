@@ -11,13 +11,13 @@ import Calculator from "./components/Calculator.vue";
 <style>
 @font-face {
   font-family: "Fira Code";
-  src: url("@/../public/fonts/FiraCode-Regular.eot");
-  src: url("@/../public/fonts/FiraCode-Regular.eot?#iefix")
+  src: url("/fonts/FiraCode-Regular.eot");
+  src: url("/fonts/FiraCode-Regular.eot?#iefix")
       format("embedded-opentype"),
-    url("@/../public/fonts/FiraCode-Regular.svg#FiraCode-Regular") format("svg"),
-    url("@/../public/fonts/FiraCode-Regular.ttf") format("truetype"),
-    url("@/../public/fonts/FiraCode-Regular.woff") format("woff"),
-    url("@/../public/fonts/FiraCode-Regular.woff2") format("woff2");
+    url("/fonts/FiraCode-Regular.svg#FiraCode-Regular") format("svg"),
+    url("/fonts/FiraCode-Regular.ttf") format("truetype"),
+    url("/fonts/FiraCode-Regular.woff") format("woff"),
+    url("/fonts/FiraCode-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }

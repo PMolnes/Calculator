@@ -9,7 +9,7 @@
     <div class="buttons">
       <button @click="allClear" class="double">AC</button>
       <button @click="clear">C</button>
-      <button @click="addOperand" value="&#247;">&#247;</button>
+      <button @click="divide" value="&#247;">&#247;</button>
       <button @click="addOperand" value="7">7</button>
       <button @click="addOperand" value="8">8</button>
       <button @click="addOperand" value="9">9</button>
@@ -24,7 +24,7 @@
       <button>-</button>
       <button @click="addOperand" value="0">0</button>
       <button>.</button>
-      <button class="double">=</button>
+      <button @click="equate" class="double">=</button>
     </div>
   </div>
 </template>
@@ -36,22 +36,30 @@ const currentOperand = ref("");
 const previousOperand = ref("");
 
 const addOperand = (event: Event) => {
-  if ((<HTMLInputElement>event.target).value === "&#247;") {
-    previousOperand.value = currentOperand.value;
-  }
   currentOperand.value += (<HTMLInputElement>event.target).value;
   console.log(currentOperand.value);
 };
 
 const allClear = () => {
   currentOperand.value = "";
+  previousOperand.value = "";
 };
 
 const clear = () => {
   currentOperand.value = currentOperand.value.slice(0, -1);
 };
 
-const divide = (a: string, b: string) => {};
+const divide = (event: Event) => {
+  previousOperand.value = currentOperand.value += " " + (<HTMLInputElement>event.target).value;
+  currentOperand.value = "";
+};
+
+const equate = () => {
+  const numA = parseInt(previousOperand.value.split(" ").values().next().value);
+  const numB = parseInt(currentOperand.value);
+  previousOperand.value = previousOperand.value += " " + currentOperand.value;
+  currentOperand.value = "" + numA / numB;
+}
 </script>
 
 <style scoped>
@@ -86,7 +94,8 @@ const divide = (a: string, b: string) => {};
 
 .previous-operand {
   font-size: 2rem;
-  color: white;
+  color: rgb(255, 255, 255);
+  opacity: 0.75;
 }
 
 .current-operand {
