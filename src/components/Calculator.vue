@@ -9,21 +9,21 @@
     <div class="buttons">
       <button @click="allClear" class="double">AC</button>
       <button @click="clear">C</button>
-      <button @click="divide" value="&#247;">&#247;</button>
+      <button @click="operation" value="&#247;">&#247;</button>
       <button @click="addOperand" value="7">7</button>
       <button @click="addOperand" value="8">8</button>
       <button @click="addOperand" value="9">9</button>
-      <button>&times;</button>
+      <button @click="operation" value="&times;">&times;</button>
       <button @click="addOperand" value="4">4</button>
       <button @click="addOperand" value="5">5</button>
       <button @click="addOperand" value="6">6</button>
-      <button>+</button>
+      <button @click="operation" value="+">+</button>
       <button @click="addOperand" value="1">1</button>
       <button @click="addOperand" value="2">2</button>
       <button @click="addOperand" value="3">3</button>
-      <button>-</button>
+      <button @click="operation" value="-">-</button>
       <button @click="addOperand" value="0">0</button>
-      <button>.</button>
+      <button @click="addOperand" value=".">.</button>
       <button @click="equate" class="double">=</button>
     </div>
   </div>
@@ -34,10 +34,15 @@ import { ref } from "vue";
 
 const currentOperand = ref("");
 const previousOperand = ref("");
+const map = new Map([
+  ["+", (a: number, b: number) => a + b],
+  ["-", (a, b) => a - b],
+  ["×", (a, b) => a * b],
+  ["÷", (a, b) => a / b],
+]);
 
 const addOperand = (event: Event) => {
   currentOperand.value += (<HTMLInputElement>event.target).value;
-  console.log(currentOperand.value);
 };
 
 const allClear = () => {
@@ -49,17 +54,26 @@ const clear = () => {
   currentOperand.value = currentOperand.value.slice(0, -1);
 };
 
-const divide = (event: Event) => {
-  previousOperand.value = currentOperand.value += " " + (<HTMLInputElement>event.target).value;
+const operation = (event: Event) => {
+  previousOperand.value = currentOperand.value +=
+    " " + (<HTMLInputElement>event.target).value;
   currentOperand.value = "";
 };
 
 const equate = () => {
-  const numA = parseInt(previousOperand.value.split(" ").values().next().value);
-  const numB = parseInt(currentOperand.value);
-  previousOperand.value = previousOperand.value += " " + currentOperand.value;
-  currentOperand.value = "" + numA / numB;
-}
+  const numA = parseFloat(
+    previousOperand.value.split(" ").values().next().value
+  );
+  const numB = parseFloat(currentOperand.value);
+  const operator = previousOperand.value.split(" ")[1];
+  if (isNaN(numA) || isNaN(numB)) {
+    currentOperand.value = "ERROR";
+    previousOperand.value = "";
+  } else {
+    previousOperand.value = previousOperand.value += " " + currentOperand.value;
+    currentOperand.value = "" + map.get(operator)?.(numA, numB);
+  }
+};
 </script>
 
 <style scoped>
