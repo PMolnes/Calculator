@@ -34,33 +34,54 @@ import { ref } from "vue";
 
 const currentOperand = ref("");
 const previousOperand = ref("");
+const expression = ref("");
 const map = new Map([
   ["+", (a: number, b: number) => a + b],
-  ["-", (a, b) => a - b],
-  ["×", (a, b) => a * b],
-  ["÷", (a, b) => a / b],
+  ["-", (a: number, b: number) => a - b],
+  ["×", (a: number, b: number) => a * b],
+  ["÷", (a: number, b: number) => a / b],
 ]);
 
 const addOperand = (event: Event) => {
+  expression.value += (<HTMLInputElement>event.target).value;
   currentOperand.value += (<HTMLInputElement>event.target).value;
 };
 
 const allClear = () => {
   currentOperand.value = "";
   previousOperand.value = "";
+  expression.value = "";
 };
 
 const clear = () => {
-  currentOperand.value = currentOperand.value.slice(0, -1);
+  if (currentOperand.value !== '') {
+    currentOperand.value = currentOperand.value.slice(0, -1);
+    expression.value = currentOperand.value.slice(0, -1);
+  }
 };
 
 const operation = (event: Event) => {
+  expression.value += (<HTMLInputElement>event.target).value;
   previousOperand.value = currentOperand.value +=
     " " + (<HTMLInputElement>event.target).value;
   currentOperand.value = "";
 };
 
+/*
+  1. Read input from user
+  2. When = button pressed:
+  3. Equate the entered expression
+  
+  Equating entered expression steps: 
+  1. Get numbers entered
+  2. Get operator entered
+  3. Update the currentOperand to the answer
+  4. Update previous operand to the expression
+
+*/
+
 const equate = () => {
+  console.log(expression.value);
   const numA = parseFloat(
     previousOperand.value.split(" ").values().next().value
   );
@@ -102,7 +123,7 @@ const equate = () => {
   flex-direction: column;
   align-items: flex-end;
   justify-content: space-between;
-  width: 100%;
+  max-width: 100%;
   height: 100%;
 }
 

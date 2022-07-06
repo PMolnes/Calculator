@@ -22,6 +22,10 @@ import Calculator from "./components/Calculator.vue";
   font-style: normal;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   display: flex;
   place-items: center;
