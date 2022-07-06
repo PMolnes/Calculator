@@ -62,23 +62,9 @@ const clear = () => {
 
 const operation = (event: Event) => {
   expression.value += (<HTMLInputElement>event.target).value;
-  previousOperand.value = currentOperand.value +=
-    " " + (<HTMLInputElement>event.target).value;
+  previousOperand.value = currentOperand.value += " " + (<HTMLInputElement>event.target).value;
   currentOperand.value = "";
 };
-
-/*
-  1. Read input from user
-  2. When = button pressed:
-  3. Equate the entered expression
-  
-  Equating entered expression steps: 
-  1. Get numbers entered
-  2. Get operator entered
-  3. Update the currentOperand to the answer
-  4. Update previous operand to the expression
-
-*/
 
 const equate = () => {
   console.log(expression.value);
