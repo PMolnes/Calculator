@@ -36,11 +36,6 @@ body {
 
 #app {
   font-family: "Fira Code", monospace;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  place-items: center;
-  background-color: black;
-
+  background-color: white;
 }
 </style>
