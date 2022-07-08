@@ -1,6 +1,7 @@
-# calculator
+### Calculator app with VueTS and Tailwind
 
-This template should help get you started developing with Vue 3 in Vite.
+![image](https://user-images.githubusercontent.com/72920187/177974039-93454da3-d1d8-43a5-a220-29ccddaaf96e.png)
+
 
 ## Recommended IDE Setup
 
