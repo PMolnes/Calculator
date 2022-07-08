@@ -2,10 +2,10 @@
   <div class="drop-shadow-2xl flex flex-col items-center justify-center max-w-sm h-96">
     <div class="flex flex-col items-end justify-between w-96 h-32">
       <div class="flex flex-col items-end justify-between bg-[#82a3a2] w-96 h-32 p-4 border border-grey">
-        <div class="text-white text-4xl text-opacity-75">
+        <div class="text-white text-opacity-75" :class="textSize(previousOperand)">
           {{ previousOperand }}
         </div>
-        <div class="max-w-full text-4xl text-white font-bold">{{ currentOperand }}</div>
+        <div class="max-w-full text-white font-bold" :class="textSize(currentOperand)">{{ currentOperand }}</div>
       </div>
     </div>
     <div class="grid grid-cols-4 w-full h-full bg-white">
@@ -34,12 +34,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref, type Ref } from "vue";
 import CalculatorButton from "./CalculatorButton.vue";
 
 const currentOperand = ref("");
 const previousOperand = ref("");
 const expression = ref("");
+
+const textSize = (operand: string) => {
+  return operand.length > 9 ? "text-2xl" : "text-4xl";
+};
 
 const addOperand = (event: Event) => {
   expression.value += (<HTMLInputElement>event.target).value;
@@ -56,7 +60,6 @@ const clear = () => {
   if (currentOperand.value !== "" && currentOperand.value[currentOperand.value.length - 1] === " ") {
     currentOperand.value = currentOperand.value.slice(0, -2);
     expression.value = expression.value.slice(0, -2);
-    console.log('-2' + expression.value);
   } else if (currentOperand.value !== "") {
     currentOperand.value = currentOperand.value.slice(0, -1);
     expression.value = expression.value.slice(0, -1);
@@ -71,7 +74,11 @@ const operation = (event: Event) => {
 
 const equate = () => {
   previousOperand.value = currentOperand.value;
-  currentOperand.value = eval(expression.value);
+  if (eval(expression.value).toString().length > 10) {
+    currentOperand.value = eval(expression.value).toExponential(2);
+  } else {
+    currentOperand.value = eval(expression.value);
+  }
   expression.value = currentOperand.value;
 };
 </script>
